@@ -798,6 +798,8 @@ func (cca *cookedCopyCmdArgs) processCopyJobPartOrders() (err error) {
 			return fmt.Errorf("couldn't get absolute path of the source location %s. Failed with errror %s", cca.source, err.Error())
 		}
 
+		tmpSrc = common.ToExtendedPath(tmpSrc)
+
 		jobPartOrder.SourceRoot = cleanLocalPath(getPathBeforeFirstWildcard(tmpSrc))
 		cca.source = cleanLocalPath(tmpSrc)
 	case common.ELocation.Blob():
@@ -945,6 +947,8 @@ func (cca *cookedCopyCmdArgs) processCopyJobPartOrders() (err error) {
 		if err != nil {
 			return err
 		}
+
+		result = common.ToExtendedPath(result)
 
 		cca.destination = cleanLocalPath(result)
 	}
