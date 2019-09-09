@@ -453,6 +453,9 @@ func GetJobSummary(jobID common.JobID) common.ListJobSummaryResponse {
 		js.PercentComplete = 100
 	} else {
 		js.PercentComplete = 100 * float32(js.TotalBytesTransferred) / float32(js.TotalBytesExpected)
+		if js.PercentComplete > 100 {
+			js.PercentComplete = 100 // we had some transient conditions that temporarily gave values above 100
+		}
 	}
 
 	// This is added to let FE to continue fetching the Job Progress Summary
@@ -600,6 +603,9 @@ func GetSyncJobSummary(jobID common.JobID) common.ListSyncJobSummaryResponse {
 		js.PercentComplete = 100
 	} else {
 		js.PercentComplete = 100 * float32(js.TotalBytesTransferred) / float32(js.TotalBytesExpected)
+		if js.PercentComplete > 100 {
+			js.PercentComplete = 100 // we had some transient conditions that temporarily gave values above 100
+		}
 	}
 
 	// This is added to let FE to continue fetching the Job Progress Summary
